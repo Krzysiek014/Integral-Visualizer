@@ -13,3 +13,6 @@ class Zmienna(Operacja):
   
   def __str__(self):
     return self.nazwa
+
+X = Zmienna('x')
+Y = Zmienna('y')
