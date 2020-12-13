@@ -15,7 +15,7 @@ ax1 = fig.add_subplot(111, projection='3d')
 
 window = tk.Tk()
 window.title("Całka - wizualizacja")
-window.attributes('-zoomed', True)
+# window.attributes('-zoomed', True)
 window.columnconfigure(0, minsize=400)
 
 inputs = tk.LabelFrame(window, text="Dane wejściowe", width=300)
@@ -50,10 +50,11 @@ canvas.draw()
 canvas.get_tk_widget().pack()
 
 def integral_figure(x_min, x_max, y_min, y_max, formula_string):
+    ax1.clear()
     global canvas
-    width = depth = 0.1
-    _x = [x_min + depth*i for i in range(int((x_max-x_min) / depth)+1)]
-    _y = [y_min + depth*i for i in range(int((y_max-y_min) / depth)+1)]
+    width = depth = (x_max - x_min) / 10
+    _x = [x_min + depth*i for i in range(10)]
+    _y = [y_min + depth*i for i in range(10)]
     _xx, _yy = np.meshgrid(_x, _y)
     x, y = _xx.ravel(), _yy.ravel()
 
@@ -63,7 +64,6 @@ def integral_figure(x_min, x_max, y_min, y_max, formula_string):
     bottom = np.zeros_like(top)
     colormat = ['g' if a>0 else 'r' for a in top]
     ax1.bar3d(x, y, bottom, width, depth, top, shade=True, color=colormat)
-    
     plot.winfo_children()[0].destroy()
     canvas = FigureCanvasTkAgg(fig, master=plot)
     canvas.draw()
