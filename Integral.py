@@ -13,6 +13,9 @@ parser = ParserWyrazen()
 fig = Figure(figsize=(15, 10))
 ax1 = fig.add_subplot(111, projection='3d')
 
+interactive_figure = plt.figure(figsize=(12,8))
+interactive_figure_ax1 = interactive_figure.add_subplot(111, projection='3d')
+
 window = tk.Tk()
 window.title("Całka - wizualizacja")
 # window.attributes('-zoomed', True)
@@ -45,8 +48,11 @@ bars_label = textBlock(bars, 0, 0, "Liczba słupków:")
 bars_count = inputBlock(bars, 0, 1, 6)
 bars.pack(pady = (0,5))
 
-submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get(), int(bars_count.get())))
+submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get(), int(bars_count.get()), "normal"))
 submit.pack()
+
+interactive = tk.Button(inputs, text="INTERAKTYWNIE", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get(), int(bars_count.get()), "interactive"))
+interactive.pack()
 
 plot = tk.LabelFrame(window, text="Wykres funkcji")
 plot.grid(row=0, column=1)
@@ -54,9 +60,7 @@ canvas = FigureCanvasTkAgg(fig, master=plot)
 canvas.draw()
 canvas.get_tk_widget().pack()
 
-def integral_figure(x_min, x_max, y_min, y_max, formula_string, bars_count):
-    ax1.clear()
-    global canvas
+def calculate_integral(x_min, x_max, y_min, y_max, formula_string, bars_count):
     width = depth = (x_max - x_min) / bars_count
     _x = [x_min + depth*i for i in range(bars_count)]
     _y = [y_min + depth*i for i in range(bars_count)]
@@ -67,11 +71,24 @@ def integral_figure(x_min, x_max, y_min, y_max, formula_string, bars_count):
 
     top = [operation.wykonaj(a[0], a[1]) for a in zip(x,y)]
     bottom = np.zeros_like(top)
-    colormat = ['g' if a>0 else 'r' for a in top]
-    ax1.bar3d(x, y, bottom, width, depth, top, shade=True, color=colormat)
-    plot.winfo_children()[0].destroy()
-    canvas = FigureCanvasTkAgg(fig, master=plot)
-    canvas.draw()
-    canvas.get_tk_widget().pack()
+
+    return [x, y, bottom, width, depth, top]
+
+def integral_figure(x_min, x_max, y_min, y_max, formula_string, bars_count, type):
+
+    data = calculate_integral(x_min, x_max, y_min, y_max, formula_string, bars_count)
+    colormat = ['g' if a>0 else 'r' for a in data[5]]
+
+    if(type=="normal"):
+        ax1.clear()
+        global canvas
+        ax1.bar3d(*calculate_integral(x_min, x_max, y_min, y_max, formula_string, bars_count), shade=True, color=colormat)
+        plot.winfo_children()[0].destroy()
+        canvas = FigureCanvasTkAgg(fig, master=plot)
+        canvas.draw()
+        canvas.get_tk_widget().pack()
+    else:
+        interactive_figure_ax1.bar3d(*calculate_integral(x_min, x_max, y_min, y_max, formula_string, bars_count), shade=True, color=colormat)
+        interactive_figure.show()
 
 tk.mainloop()
