@@ -40,7 +40,12 @@ label_domain_y_sep = textBlock(y_frame, 0, 2, " - ")
 domain_y_max = inputBlock(y_frame, 0, 3)
 y_frame.pack(pady = (0,5))
 
-submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get()))
+bars = tk.Frame(inputs)
+bars_label = textBlock(bars, 0, 0, "Liczba słupków:")
+bars_count = inputBlock(bars, 0, 1, 6)
+bars.pack(pady = (0,5))
+
+submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get(), int(bars_count.get())))
 submit.pack()
 
 plot = tk.LabelFrame(window, text="Wykres funkcji")
@@ -49,12 +54,12 @@ canvas = FigureCanvasTkAgg(fig, master=plot)
 canvas.draw()
 canvas.get_tk_widget().pack()
 
-def integral_figure(x_min, x_max, y_min, y_max, formula_string):
+def integral_figure(x_min, x_max, y_min, y_max, formula_string, bars_count):
     ax1.clear()
     global canvas
-    width = depth = (x_max - x_min) / 10
-    _x = [x_min + depth*i for i in range(10)]
-    _y = [y_min + depth*i for i in range(10)]
+    width = depth = (x_max - x_min) / bars_count
+    _x = [x_min + depth*i for i in range(bars_count)]
+    _y = [y_min + depth*i for i in range(bars_count)]
     _xx, _yy = np.meshgrid(_x, _y)
     x, y = _xx.ravel(), _yy.ravel()
 
