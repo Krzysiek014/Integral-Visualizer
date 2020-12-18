@@ -1,23 +1,21 @@
-from Parser.Interfejsy import *
+from Parser.Interfejsy import Wyrazenie, Operator
+from Parser.Operacje.Arytmetyczne.WyrazenieAlgebraiczne import WyrazenieAlgebraiczne
 
-class Odejmowanie(Operacja):
-  a: Operacja
-  b: Operacja
+class Odejmowanie(WyrazenieAlgebraiczne):
+  symbol = '-'
+  znaczenieWyrazenia = -1
 
-  def __init__(self, a: Operacja, b: Operacja):
+  def __init__(self, a: Wyrazenie, b: Wyrazenie):
     self.a = a
     self.b = b
 
   def wykonaj(self, x: float, y: float) -> float:
     return self.a.wykonaj(x, y) - self.b.wykonaj(x, y)
-  
-  def __str__(self):
-    return f"{ self.a } - { self.b }"
 
 class OdejmowanieOperator(Operator):
-  def akceptuje(self, znak: str):
-    return znak == '-'
+  def akceptuje(self, token: str):
+    return token == '-'
 
-  def utworz(self, a: Operacja, b: Operacja):
+  def utworz(self, a: Wyrazenie, b: Wyrazenie, token):
     return Odejmowanie(a, b)
 

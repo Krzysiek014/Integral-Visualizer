@@ -1,10 +1,10 @@
 from math import cos
-from Parser.Interfejsy import *
+from Parser.Interfejsy import Wyrazenie, Operator
 
-class Cosinus(Operacja):
-  a: Operacja
+class Cosinus(Wyrazenie):
+  a: Wyrazenie
 
-  def __init__(self, a: Operacja):
+  def __init__(self, a: Wyrazenie):
     self.a = a
 
   def wykonaj(self, x: float, y: float) -> float:
@@ -16,8 +16,8 @@ class Cosinus(Operacja):
 class CosinusOperator(Operator):
   czyDwuargumentowy = False
 
-  def akceptuje(self, znak: str):
-    return znak == 'cos'
+  def akceptuje(self, token: str):
+    return token == 'cos'
 
-  def utworz(self, a: Operacja, b):
+  def utworz(self, a: Wyrazenie, b, token):
     return Cosinus(a)

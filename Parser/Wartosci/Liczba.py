@@ -1,7 +1,7 @@
-from math import pi, e
-from Parser.Interfejsy import Operacja
+from math import pi, e, sqrt
+from Parser.Interfejsy import Wyrazenie
 
-class Liczba(Operacja):
+class Liczba(Wyrazenie):
   _wartosc = 0.0
   _str = None
 
@@ -17,3 +17,4 @@ class Liczba(Operacja):
 
 E = Liczba(e, 'e')
 PI = Liczba(pi, 'pi')
+FI = Liczba((1 + sqrt(5)) / 2, 'fi')
