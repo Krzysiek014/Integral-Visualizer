@@ -1,10 +1,10 @@
 from math import sin
-from Parser.Interfejsy import *
+from Parser.Interfejsy import Wyrazenie, Operator
 
-class Sinus(Operacja):
-  a: Operacja
+class Sinus(Wyrazenie):
+  a: Wyrazenie
 
-  def __init__(self, a: Operacja):
+  def __init__(self, a: Wyrazenie):
     self.a = a
 
   def wykonaj(self, x: float, y: float) -> float:
@@ -16,9 +16,9 @@ class Sinus(Operacja):
 class SinusOperator(Operator):
   czyDwuargumentowy = False
 
-  def akceptuje(self, znak: str):
-    return znak == 'sin'
+  def akceptuje(self, token: str):
+    return token == 'sin'
 
-  def utworz(self, a: Operacja, b):
+  def utworz(self, a: Wyrazenie, b, token):
     return Sinus(a)
 

@@ -1,16 +1,19 @@
 from Parser.Wartosci.Zmienna import X, Y
-from Parser.Wartosci.Liczba import Liczba, E, PI
+from Parser.Wartosci.Liczba import Liczba, E, PI, FI
 
 from Parser.Operacje.Arytmetyczne.Dodawanie import DodawanieOperator
 from Parser.Operacje.Arytmetyczne.Odejmowanie import OdejmowanieOperator
 from Parser.Operacje.Arytmetyczne.Mnozenie import MnozenieOperator
 from Parser.Operacje.Arytmetyczne.Dzielenie import DzielenieOperator
 from Parser.Operacje.Arytmetyczne.Potegowanie import PotegowanieOperator
-from Parser.Operacje.Trygonometryczne.Sinus import SinusOperator
-from Parser.Operacje.Trygonometryczne.Cosinus import CosinusOperator
+from Parser.Operacje.Funkcyjne.Logarytm import LogarytmOperator
+from Parser.Operacje.Funkcyjne.LogarytmNaturalny import LogarytmNaturalnyOperator
+from Parser.Operacje.Funkcyjne.Sinus import SinusOperator
+from Parser.Operacje.Funkcyjne.Cosinus import CosinusOperator
+from Parser.Operacje.Funkcyjne.Tangens import TangensOperator
 
 class ParserWyrazen:
-  stale = [PI, E]
+  stale = [PI, E, FI]
   zmienne = [X, Y]
   operatory = [
     DodawanieOperator(),
@@ -20,6 +23,9 @@ class ParserWyrazen:
     PotegowanieOperator(),
     SinusOperator(),
     CosinusOperator(),
+    TangensOperator(),
+    LogarytmNaturalnyOperator(),
+    LogarytmOperator(),
   ]
 
   def parsuj(self, wyrazenie: str): 
@@ -56,10 +62,10 @@ class ParserWyrazen:
         if operator.czyDwuargumentowy:
           b = stos.pop()
           a = stos.pop()
-          stos.append(operator.utworz(a, b))
+          stos.append(operator.utworz(a, b, token))
         else:
           a = stos.pop()
-          stos.append(operator.utworz(a, a))
+          stos.append(operator.utworz(a, a, token))
 
         return True
 

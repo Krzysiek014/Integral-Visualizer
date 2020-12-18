@@ -1,6 +1,6 @@
-from Parser.Interfejsy import Operacja
+from Parser.Interfejsy import Wyrazenie
 
-class Zmienna(Operacja):
+class Zmienna(Wyrazenie):
   czyX = True
   nazwa = ''
 
