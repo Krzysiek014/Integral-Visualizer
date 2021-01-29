@@ -11,6 +11,7 @@ from Parser.Operacje.Funkcyjne.LogarytmNaturalny import LogarytmNaturalnyOperato
 from Parser.Operacje.Funkcyjne.Sinus import SinusOperator
 from Parser.Operacje.Funkcyjne.Cosinus import CosinusOperator
 from Parser.Operacje.Funkcyjne.Tangens import TangensOperator
+from Parser.Operacje.Funkcyjne.Cotangens import CotangensOperator
 
 class ParserWyrazen:
   stale = [PI, E, FI]
@@ -24,6 +25,7 @@ class ParserWyrazen:
     SinusOperator(),
     CosinusOperator(),
     TangensOperator(),
+    CotangensOperator(),
     LogarytmNaturalnyOperator(),
     LogarytmOperator(),
   ]
@@ -92,6 +94,6 @@ class ParserWyrazen:
       stos.append(Liczba(float(token)))
       return True
     except:
-      raise Exception(f"Oczekiwano wartości liczbowej spotkano { token }")
+      raise Exception(f"Nieznana wartość '{ token }'")
     
     return False

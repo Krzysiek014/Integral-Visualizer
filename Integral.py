@@ -46,10 +46,12 @@ try:
     bars_count = inputBlock(bars, 0, 1, 6)
     bars.pack(pady = (0,5))
 
-    submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(float(domain_x_min.get()), float(domain_x_max.get()), float(domain_y_min.get()), float(domain_y_max.get()), formula.get(), int(bars_count.get()), "normal"))
+    submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(float(domain_x_min.get()), float(domain_x_max.get()), float(domain_y_min.get()), float(domain_y_max.get()), formula.get(), int(bars_count.get()), "normal") \
+        if domain_x_min.get() and domain_x_max.get() and domain_y_min.get() and domain_y_max.get() and bars_count.get() else emptyField())
     submit.pack()
 
-    interactive = tk.Button(inputs, text="INTERAKTYWNIE", command=lambda:integral_figure(float(domain_x_min.get()), float(domain_x_max.get()), float(domain_y_min.get()), float(domain_y_max.get()), formula.get(), int(bars_count.get()), "interactive"))
+    interactive = tk.Button(inputs, text="INTERAKTYWNIE", command=lambda:integral_figure(float(domain_x_min.get()), float(domain_x_max.get()), float(domain_y_min.get()), float(domain_y_max.get()), formula.get(), int(bars_count.get()), "interactive") \
+        if domain_x_min.get() and domain_x_max.get() and domain_y_min.get() and domain_y_max.get() and bars_count.get() else emptyField())
     interactive.pack()
 
     plot = tk.LabelFrame(window, text="Wykres funkcji")
@@ -105,5 +107,8 @@ def integral_figure(x_min, x_max, y_min, y_max, formula_string, bars_count, type
         tk.messagebox.showwarning(title="Wystąpił błąd", message="Dla niektórych argumentów podanej dzidziny nie można obliczyć wartości funkcji")
     except Exception as e:
         tk.messagebox.showwarning(title="Wystąpił błąd", message=e)
+
+def emptyField():
+    tk.messagebox.showwarning(title="Wystąpił błąd", message="Nie wprowadzono wszsytkich danych")
 
 tk.mainloop()

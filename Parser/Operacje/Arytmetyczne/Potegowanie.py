@@ -10,7 +10,12 @@ class Potegowanie(WyrazenieAlgebraiczne):
     self.b = b
 
   def wykonaj(self, x: float, y: float) -> float:
-    return self.a.wykonaj(x, y) ** self.b.wykonaj(x, y)
+    p = self.a.wykonaj(x, y)
+
+    if p < 0:
+      raise ValueError("Potęgowanie liczby ujemnej")
+
+    return p ** self.b.wykonaj(x, y)
 
 class PotegowanieOperator(Operator):
   def akceptuje(self, token: str):
