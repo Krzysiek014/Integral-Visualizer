@@ -24,7 +24,7 @@ try:
 
     formula_frame = tk.Frame(inputs)
     formula_label = textBlock(formula_frame, 0, 0, "F(x,y) = ")
-    formula = inputBlock(formula_frame, 0, 1, 10)
+    formula = inputBlock(formula_frame, 0, 1, 16)
     formula_frame.pack(pady = (0,5))
 
     x_frame = tk.Frame(inputs)
@@ -46,10 +46,10 @@ try:
     bars_count = inputBlock(bars, 0, 1, 6)
     bars.pack(pady = (0,5))
 
-    submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get(), int(bars_count.get()), "normal"))
+    submit = tk.Button(inputs, text="GENERUJ", command=lambda:integral_figure(float(domain_x_min.get()), float(domain_x_max.get()), float(domain_y_min.get()), float(domain_y_max.get()), formula.get(), int(bars_count.get()), "normal"))
     submit.pack()
 
-    interactive = tk.Button(inputs, text="INTERAKTYWNIE", command=lambda:integral_figure(int(domain_x_min.get()), int(domain_x_max.get()), int(domain_y_min.get()), int(domain_y_max.get()), formula.get(), int(bars_count.get()), "interactive"))
+    interactive = tk.Button(inputs, text="INTERAKTYWNIE", command=lambda:integral_figure(float(domain_x_min.get()), float(domain_x_max.get()), float(domain_y_min.get()), float(domain_y_max.get()), formula.get(), int(bars_count.get()), "interactive"))
     interactive.pack()
 
     plot = tk.LabelFrame(window, text="Wykres funkcji")

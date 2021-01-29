@@ -31,7 +31,7 @@ class ParserWyrazen:
   def parsuj(self, wyrazenie: str): 
     stos = []
 
-    for token in wyrazenie.lower().split(" "):
+    for token in wyrazenie.strip().lower().split(" "):
       if self._parsujDzialania(token, stos):
         continue
 

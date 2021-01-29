@@ -8,16 +8,16 @@ class Tangens(Wyrazenie):
     self.a = a
 
   def wykonaj(self, x: float, y: float) -> float:
-    return tan(self.a.wykonaj(x, y))
+    return 1 / tan(self.a.wykonaj(x, y))
   
   def __str__(self):
-    return f"tg({ self.a })"
+    return f"ctg({ self.a })"
 
 class TangensOperator(Operator):
   czyDwuargumentowy = False
 
   def akceptuje(self, token: str):
-    return token == 'tg'
+    return token == 'ctg'
 
   def utworz(self, a: Wyrazenie, b, token):
     return Tangens(a)
